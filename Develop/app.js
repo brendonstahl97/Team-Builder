@@ -10,101 +10,151 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+let employees = [];
 
-
+// function to create new manager
 async function createManager() {
     const questions = [
         {
             type: "input",
             message: "What is the Manager's Name?",
-            name: name
+            name: "name"
         },
         {
             type: "input",
             message: "What is the Manager's ID?",
-            name: id
+            name: "id"
         },
         {
             type: "input",
             message: "What is the Manager's Email?",
-            name: email
+            name: "email"
         },
         {
             type: "input",
             message: "What is the Manager's office Number?",
-            name: officeNumber
+            name: "officeNumber"
         },
     ]
 
     const { name, id, email, officeNumber } = await inquirer.prompt(questions);
 
     const manager = new Manager(name, id, email, officeNumber);
-    console.log(manager);
+    employees.push(manager);
+    selectEmployeeType();
 }
 
+
+// function to create new engineer
 async function createEngineer() {
     const questions = [
         {
             type: "input",
             message: "What is the Engineer's Name?",
-            name: name
+            name: "name"
         },
         {
             type: "input",
             message: "What is the Engineer's ID?",
-            name: id
+            name: "id"
         },
         {
             type: "input",
             message: "What is the Engineer's Email?",
-            name: email
+            name: "email"
         },
         {
             type: "input",
             message: "What is the Engineer's Github?",
-            name: github
+            name: "github"
         },
     ]
 
     const { name, id, email, github } = await inquirer.prompt(questions);
 
     const engineer = new Engineer(name, id, email, github);
-    console.log(engineer);
+    employees.push(engineer);
+    selectEmployeeType();
 }
 
+// function to create new intern
 async function createIntern() {
     const questions = [
         {
             type: "input",
             message: "What is the Intern's Name?",
-            name: name
+            name: "name"
         },
         {
             type: "input",
             message: "What is the Intern's ID?",
-            name: id
+            name: "id"
         },
         {
             type: "input",
             message: "What is the Intern's Email?",
-            name: email
+            name: "email"
         },
         {
             type: "input",
             message: "What is the Intern's School?",
-            name: school
+            name: "school"
         },
     ]
 
     const { name, id, email, school } = await inquirer.prompt(questions);
 
     const intern = new Intern(name, id, email, school);
-    console.log(intern);
+    employees.push(intern);
+    
+    selectEmployeeType();
 }
 
-createManager();
-createEngineer();
-createIntern();
+
+// funtion to select type of employee for creating or quit program
+async function selectEmployeeType() {
+    const question = [
+        {
+            type: "list",
+            message: "What type of employee would you like to add?",
+            choices: ["Intern", "Engineer", "I don't want to add any more employees."],
+            name: "empType"
+        }
+    ]
+
+    let { empType } = await inquirer.prompt(question);
+
+    if (empType === "Engineer") {
+         createEngineer();
+    } else if (empType === "Intern") {
+         createIntern();
+    } else {
+        console.log("Success!! Team has been built");
+
+        createOutput();
+
+        return;
+    }
+}
+
+// function to create output file
+function createOutput() {
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR);
+    }
+
+    fs.writeFile(outputPath, render(employees), err => {if (err) throw err} );
+}
+
+async function buildTeam() {
+    await createManager();
+} 
+
+buildTeam();
+
+
+
+
 
 
 // Write code to use inquirer to gather information about the development team members,
