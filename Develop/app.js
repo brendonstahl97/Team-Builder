@@ -11,6 +11,102 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 
+
+async function createManager() {
+    const questions = [
+        {
+            type: "input",
+            message: "What is the Manager's Name?",
+            name: name
+        },
+        {
+            type: "input",
+            message: "What is the Manager's ID?",
+            name: id
+        },
+        {
+            type: "input",
+            message: "What is the Manager's Email?",
+            name: email
+        },
+        {
+            type: "input",
+            message: "What is the Manager's office Number?",
+            name: officeNumber
+        },
+    ]
+
+    const { name, id, email, officeNumber } = await inquirer.prompt(questions);
+
+    const manager = new Manager(name, id, email, officeNumber);
+    console.log(manager);
+}
+
+async function createEngineer() {
+    const questions = [
+        {
+            type: "input",
+            message: "What is the Engineer's Name?",
+            name: name
+        },
+        {
+            type: "input",
+            message: "What is the Engineer's ID?",
+            name: id
+        },
+        {
+            type: "input",
+            message: "What is the Engineer's Email?",
+            name: email
+        },
+        {
+            type: "input",
+            message: "What is the Engineer's Github?",
+            name: github
+        },
+    ]
+
+    const { name, id, email, github } = await inquirer.prompt(questions);
+
+    const engineer = new Engineer(name, id, email, github);
+    console.log(engineer);
+}
+
+async function createIntern() {
+    const questions = [
+        {
+            type: "input",
+            message: "What is the Intern's Name?",
+            name: name
+        },
+        {
+            type: "input",
+            message: "What is the Intern's ID?",
+            name: id
+        },
+        {
+            type: "input",
+            message: "What is the Intern's Email?",
+            name: email
+        },
+        {
+            type: "input",
+            message: "What is the Intern's School?",
+            name: school
+        },
+    ]
+
+    const { name, id, email, school } = await inquirer.prompt(questions);
+
+    const intern = new Intern(name, id, email, school);
+    console.log(intern);
+}
+
+createManager();
+createEngineer();
+createIntern();
+
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
