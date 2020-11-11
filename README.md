@@ -2,7 +2,7 @@
 # Team Builder [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ***
    
-![Example Gif](./assets/example.gif)
+![Example Gif](..\assets\example.gif)
 
 ### Table of Contents
 * [Description](#Description)
